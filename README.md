@@ -40,7 +40,7 @@ function draw() {
   textsize(20)
   textbox(box.x, box.y, box.w, box.h, message, box.textColor)
 
-  // textbox() just wrap a text inside of a rectangle, does not draw any window
+  // textbox() just wrap a text inside of a rectangle area, does not draw any window
   // the lines below draw a window for the textbox
   linewidth(5)
   rect(box.x, box.y, box.w, box.h, 3)
