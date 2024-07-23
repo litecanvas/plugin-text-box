@@ -1,22 +1,24 @@
 {
-  "name": "@litecanvas/plugin-name",
+  "name": "@litecanvas/plugin-text-box",
   "version": "0.0.1",
-  "description": "Plugin description",
-  "author": "Luiz Bills <luizbills@pm.me>",
+  "description": "Text boxes (dialogs, multi lines text, etc) for litecanvas games.",
+  "author": "Luiz Bills",
   "license": "MIT",
-  "homepage": "https://github.com/user/repo",
+  "homepage": "https://github.com/litecanvas/plugin-text-box",
   "bugs": {
-    "url": "https://github.com/user/repo/issues"
+    "url": "https://github.com/litecanvas/plugin-text-box/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/user/repo.git#main"
+    "url": "git+https://github.com/litecanvas/plugin-text-box.git#main"
   },
   "main": "src/index.js",
   "keywords": [
     "litecanvas",
-    "foo",
-    "bar"
+    "message",
+    "dialog",
+    "textbox",
+    "ui"
   ],
   "scripts": {
     "dev": "esbuild src/index.js --bundle --watch --outfile=dist/dist.js --servedir=.",

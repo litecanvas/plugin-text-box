@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width,
+    user-scalable=no, initial-scale=1, maximum-scale=1, user-scalable=0"
+    />
+    <title>Litecanvas Plugin</title>
+    <style type="text/css">
+      body {
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <script src="https://unpkg.com/litecanvas/dist/dist.js"></script>
+    <script src="../dist/dist.js"></script>
+    <script>
+      litecanvas()
+
+      use(pluginTextBox) // load the plugin
+
+      function resized() {
+        box = [150, 80, WIDTH - 300, 160]
+        message =
+          "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus placeat et itaque fuga sint, reiciendis natus sunt cumque accusamus voluptates maxime eaque labore dolorem vel quam odit similique. Dolorum numquam facilis, ex ad, in ullam porro unde excepturi, reiciendis quam voluptate amet sunt libero!"
+      }
+
+      function init() {
+        textbox.padding = 20
+        textbox.lineHeight = 1.4
+        textbox.debug = true
+      }
+
+      function update() {
+        if (TAPPED) {
+          textbox.debug = !textbox.debug
+        }
+      }
+
+      function draw() {
+        cls(0)
+
+        textsize(16)
+        text(20, 20, "Tap to debug", 2)
+
+        textsize(20)
+        textbox(...box, message, 3)
+
+        if (!textbox.debug) {
+          linewidth(5)
+          rect(...box, 3)
+        }
+      }
+    </script>
+  </body>
+</html>
