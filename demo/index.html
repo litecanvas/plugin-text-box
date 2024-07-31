@@ -31,20 +31,18 @@
       function init() {
         textbox.padding = 20
         textbox.lineHeight = 1.4
-        textbox.debug = true
+        textbox.debug = false
       }
 
-      function update() {
-        if (TAPPED) {
-          textbox.debug = !textbox.debug
-        }
+      function tapped() {
+        textbox.debug = !textbox.debug
       }
 
       function draw() {
         cls(0)
 
         textsize(16)
-        text(20, 20, "Tap to debug", 2)
+        text(20, 20, "Tap to toogle debug mode", 2)
 
         textsize(20)
         textbox(...box, message, 3)
