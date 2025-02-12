@@ -1,6 +1,6 @@
 {
   "name": "@litecanvas/plugin-text-box",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Text boxes (dialogs, multi lines text, etc) for litecanvas games.",
   "author": "Luiz Bills",
   "license": "MIT",

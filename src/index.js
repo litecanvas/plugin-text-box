@@ -1,3 +1,5 @@
+import "litecanvas"
+
 /*! Text Box plugin for litecanvas v0.0.1 by Luiz Bills | MIT Licensed */
 window.pluginTextBox = plugin
 
@@ -7,6 +9,21 @@ window.pluginTextBox = plugin
  * @returns any
  */
 export default function plugin(engine) {
+  let _fontSize = 32,
+    _fontFamily = "sans-serif",
+    _core_textsize = engine.textsize,
+    _core_textfont = engine.textsize
+
+  engine.setvar("textsize", (value) => {
+    _fontSize = value
+    _core_textsize(value)
+  })
+
+  engine.setvar("textfont", (value) => {
+    _fontFamily = value
+    _core_textfont(value)
+  })
+
   /**
    * @param {number} x
    * @param {number} y
@@ -27,8 +44,7 @@ export default function plugin(engine) {
 
     const padding = ~~textbox.padding
     const lineHeight =
-      (parseFloat(textbox.lineHeight) || 1.2) *
-      engine.textmetrics("Aqçp").height
+      (parseFloat(textbox.lineHeight) || 1.2) * _textmetrics("Aqçp").height
 
     x += padding
     y += padding
@@ -79,7 +95,7 @@ export default function plugin(engine) {
 
     for (let i = 0; i < words.length; i++) {
       const word = words[i]
-      const linewidth = engine.textmetrics(line + word).width
+      const linewidth = _textmetrics(line + word).width
       if (linewidth < maxWidth) {
         line += word + " "
       } else {
@@ -93,6 +109,16 @@ export default function plugin(engine) {
     }
 
     return lines
+  }
+
+  function _textmetrics(text, size = _fontSize) {
+    // prettier-ignore
+    const _ctx = ctx()
+    _ctx.font = `${size}px ${_fontFamily}`
+    const metrics = _ctx.measureText(text)
+    metrics.height =
+      metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent
+    return metrics
   }
 
   return { textbox }
