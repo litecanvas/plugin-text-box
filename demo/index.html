@@ -20,22 +20,29 @@
     <script>
       litecanvas()
 
-      use(pluginTextBox) // load the plugin
+      let box,
+        message,
+        debug = false
 
-      function resized() {
-        box = [150, 80, WIDTH - 300, 160]
+      function init() {
+        use(pluginTextBox, {
+          padding: 15,
+          lineHeight: 1.75,
+          color: 4,
+        })
+
+        box = [150, 80, W - 300, 160]
         message =
           "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus placeat et itaque fuga sint, reiciendis natus sunt cumque accusamus voluptates maxime eaque labore dolorem vel quam odit similique. Dolorum numquam facilis, ex ad, in ullam porro unde excepturi, reiciendis quam voluptate amet sunt libero!"
       }
 
-      function init() {
-        textbox.padding = 20
-        textbox.lineHeight = 1.4
-        textbox.debug = false
+      function resized() {
+        // update the text max width
+        box = [150, 80, W - 300, 160]
       }
 
       function tapped() {
-        textbox.debug = !textbox.debug
+        debug = !debug
       }
 
       function draw() {
@@ -45,12 +52,7 @@
         text(20, 20, "Tap to toogle debug mode", 2)
 
         textsize(20)
-        textbox(...box, message, 3)
-
-        if (!textbox.debug) {
-          linewidth(5)
-          rect(...box, 3)
-        }
+        textbox(...box, message, { debug })
       }
     </script>
   </body>

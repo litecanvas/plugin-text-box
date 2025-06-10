@@ -1,6 +1,6 @@
 {
   "name": "@litecanvas/plugin-text-box",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "description": "Text boxes (dialogs, multi lines text, etc) for litecanvas games.",
   "author": "Luiz Bills",
   "license": "MIT",
@@ -21,15 +21,15 @@
     "ui"
   ],
   "scripts": {
-    "dev": "esbuild src/index.js --bundle --watch --outfile=dist/dist.js --servedir=.",
-    "build": "esbuild src/index.js --bundle --minify --outfile=dist/dist.js",
+    "dev": "esbuild src/web.js --bundle --watch --outfile=dist/dist.js --servedir=.",
+    "build": "esbuild src/web.js --bundle --minify --outfile=dist/dist.js",
     "prepare": "npm run build"
   },
   "devDependencies": {
-    "esbuild": "^0.20.1"
+    "esbuild": "^0.25.5"
   },
   "peerDependencies": {
-    "litecanvas": "*"
+    "litecanvas": "latest"
   },
   "files": [
     "dist",

@@ -1,28 +1,22 @@
 import "litecanvas"
 
-/*! Text Box plugin for litecanvas v0.0.1 by Luiz Bills | MIT Licensed */
-window.pluginTextBox = plugin
-
 /**
  *
  * @param {LitecanvasInstance} engine
+ * @param {object} config
  * @returns any
  */
-export default function plugin(engine) {
-  let _fontSize = 32,
-    _fontFamily = "sans-serif",
-    _core_textsize = engine.textsize,
-    _core_textfont = engine.textsize
-
-  engine.setvar("textsize", (value) => {
-    _fontSize = value
-    _core_textsize(value)
-  })
-
-  engine.setvar("textfont", (value) => {
-    _fontFamily = value
-    _core_textfont(value)
-  })
+export default function plugin(engine, config = {}) {
+  const defaults = {
+    /** @type {number} */
+    color: config.color || 3,
+    /** @type {number} */
+    padding: config.padding || 10,
+    /** @type {number} */
+    lineHeight: config.lineHeight || 1.2,
+    /** @type {boolean} */
+    debug: false,
+  }
 
   /**
    * @param {number} x
@@ -30,21 +24,27 @@ export default function plugin(engine) {
    * @param {number} width
    * @param {number} height
    * @param {string} message
-   * @param {number} color
+   * @param {typeof defaults} [args]
    */
-  function textbox(x, y, width, height, message, color = 3) {
+  function textbox(x, y, width, height, message, args = {}) {
     const words = message.split(" ")
     if (words.length === 0) return
 
-    if (textbox.debug) {
+    // Backward compatibility with v0.0.1
+    if (typeof args !== "object") {
+      args = { color: args }
+    }
+
+    args = Object.assign(defaults, args)
+
+    if (args.debug) {
       engine.push()
       engine.linewidth(1)
       engine.rect(x, y, width, height, 3)
     }
 
-    const padding = ~~textbox.padding
-    const lineHeight =
-      (parseFloat(textbox.lineHeight) || 1.2) * _textmetrics("Aqçp").height
+    const padding = args.padding
+    const lineHeight = args.lineHeight * _textmetrics("Aqçp").height
 
     x += padding
     y += padding
@@ -54,34 +54,26 @@ export default function plugin(engine) {
     const lines = _wrapText(message, width)
     const limit = y + height
 
-    if (textbox.debug) {
+    if (args.debug) {
       engine.rect(x, y, width, height, 4)
     }
 
     for (let i = 0; i < lines.length; i++) {
       if (y + lineHeight > limit) break
-      if (textbox.debug) {
+      if (args.debug) {
         engine.rect(x, y, width, lineHeight, 5)
       }
-      engine.text(x, y, lines[i], color)
+      engine.text(x, y, lines[i], args.color)
       y += lineHeight
-      if (textbox.debug) {
+      if (args.debug) {
         debugger
       }
     }
 
-    if (textbox.debug) {
+    if (args.debug) {
       engine.pop()
     }
   }
-
-  // settings
-  /** @type {number} */
-  textbox.padding = 10
-  /** @type {number} */
-  textbox.lineHeight = 1.2
-  /** @type {boolean} */
-  textbox.debug = false
 
   /**
    * @param {string} textMessage
@@ -111,10 +103,11 @@ export default function plugin(engine) {
     return lines
   }
 
-  function _textmetrics(text, size = _fontSize) {
-    // prettier-ignore
-    const _ctx = ctx()
-    _ctx.font = `${size}px ${_fontFamily}`
+  function _textmetrics(text) {
+    const _ctx = engine.ctx()
+    const _fontFamily = engine.stat(11)
+    const _fontSize = ~~engine.stat(10)
+    _ctx.font = `${_fontSize}px ${_fontFamily}`
     const metrics = _ctx.measureText(text)
     metrics.height =
       metrics.actualBoundingBoxAscent + metrics.actualBoundingBoxDescent

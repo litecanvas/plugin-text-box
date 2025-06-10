@@ -14,26 +14,29 @@ Text boxes (dialogs, multi lines text, etc) for [litecanvas](https://github.com/
 import litecanvas from "litecanvas"
 import pluginTextBox from "@litecanvas/plugin-text-box"
 
+let message, box
+
 litecanvas({
   loop: { init, update, update },
 })
 
-use(pluginTextBox) // load the plugin
+// load the plugin
+use(pluginTextBox, {
+  // default configuration
+  color: 3,
+  padding: 10,
+  lineHeight: 1.2,
+})
 
 function init() {
   // The dimensions of our text box
   box = {
     x: 150,
     y: 80,
-    w: WIDTH - 300,
+    w: W - 300,
     h: 160,
     textColor: 3,
   }
-
-  // Settings for textbox()
-  // textbox.padding = 50
-  // textbox.lineHeight = 1.5
-  // textbox.debug = true
 
   message =
     "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus placeat et itaque fuga sint, reiciendis natus sunt cumque accusamus voluptates maxime eaque labore dolorem vel quam odit similique. Dolorum numquam facilis, ex ad, in ullam porro unde excepturi, reiciendis quam voluptate amet sunt libero!"
